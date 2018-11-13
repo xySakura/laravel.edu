@@ -37,6 +37,7 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
+        dump('123');
         dd($request->all());
         //
     }
