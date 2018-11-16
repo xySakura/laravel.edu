@@ -11,12 +11,38 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+//首页
+Route ::get('/', 'HomeController@index') -> name('home');
+
+//用户管理
+Route ::get('/register', 'UserController@register') -> name('register');
+Route ::post('/register', 'UserController@store') -> name('register');
+Route ::get('/login', 'UserController@login') -> name('login');
+Route ::post('/login', 'UserController@loginForm') -> name('login');
+Route ::get('/logout', 'UserController@logout') -> name('logout');
+Route ::get('/passwordReset', 'UserController@passwordReset') -> name(
+    'passwordReset'
+);
+Route ::post('/passwordReset', 'UserController@passwordResetForm') -> name(
+    'passwordReset'
+);
+
+//工具类
+Route ::any('/code/send', 'Util\CodeController@send') -> name('code.send');
+
+//后台管理
+Route ::group(
+    [
+        'middleware' => ['auth.admin'],
+        'prefix'     => 'admin',
+        'namespace'  => 'Admin',
+        'as'         => 'admin.',
+    ],
+    function () {
+        Route ::get('index', 'IndexController@index')->name('index');
+    }
+);
 
 
-Route::get('/admin/index/index','Admin\IndexController@index')->name('admin.index.index');
-Route::get('/admin/index/create','Admin\IndexController@create')->name('admin.index.create');
 
-Route::resource('/admin/photo','Admin\PhotoController');
