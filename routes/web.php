@@ -40,7 +40,8 @@ Route ::group(
         'as'         => 'admin.',
     ],
     function () {
-        Route ::get('index', 'IndexController@index')->name('index');
+        Route ::get('index', 'IndexController@index') -> name('index');
+        Route ::resource('category', 'CategoryController');
     }
 );
 

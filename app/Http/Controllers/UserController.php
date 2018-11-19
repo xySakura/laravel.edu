@@ -59,7 +59,7 @@ class UserController extends Controller
             ]
         );
         $credentials = $request->only('email','password');
-        if(\Auth::attempt($credentials)){
+        if(\Auth::attempt($credentials,$request->remember)){
             return redirect()->route('home')->with('success','登陆成功');
         }
         return redirect()->back()->with('danger','用户名或密码不正确');
