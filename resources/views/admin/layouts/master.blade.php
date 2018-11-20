@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/libs/quill/dist/quill.core.css">
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/libs/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/libs/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/css/theme.min.css">
@@ -332,23 +333,20 @@
 
 
 <!-- Libs JS -->
-<script src="{{asset('org/Dashkit/assets')}}//libs/jquery/dist/jquery.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/chart.js/dist/Chart.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/chart.js/Chart.extension.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/highlight/highlight.pack.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/flatpickr/dist/flatpickr.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/list.js/dist/list.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/quill/dist/quill.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/dropzone/dist/min/dropzone.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}//libs/select2/dist/js/select2.min.js"></script>
+
+
+
+
 
 <!-- Theme JS -->
-<script src="{{asset('org/Dashkit/assets')}}//js/theme.min.js"></script>
+
 
 {{--stack在手册Blade模板--}}
+
 @include('layouts.hdjs')
+<script>
+    require(['bootstrap'])
+</script>
 @include('layouts.message')
 
 @stack('js')

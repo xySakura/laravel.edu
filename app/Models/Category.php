@@ -9,4 +9,8 @@ class Category extends Model
     protected $fillable = [
         'title','stitle','icon'
     ];
+
+    public function article(){
+        return $this->hasMany(Article::class);
+    }
 }

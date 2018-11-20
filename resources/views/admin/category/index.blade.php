@@ -27,7 +27,7 @@
                                 <span class="input-group-text" id="icon"></span>
                             </div>
                             <input type="text"  readonly name="icon" class="form-control"
-                                   aria-label="Amount (to the nearest dollar) ">
+                                   aria-label="Amount (to the nearest dollar) " >
                             <div class="input-group-append">
                                 <span class="input-group-text" onclick="choose()" style="cursor: pointer">选择图标</span>
                             </div>
@@ -154,7 +154,7 @@
 
                                             <!-- Time -->
                                             <p class="card-text small text-muted">
-                                                添加于 2018 年 11 月 16 日
+                                                添加于 {{$category->updated_at}}
                                             </p>
 
                                         </div>
@@ -208,10 +208,10 @@
 @push('js')
 
     <script>
+
         function choose() {
             require(['hdjs'], function (hdjs) {
                 hdjs.font(function (icon) {
-                    //alert(icon)
                     $('input[name=icon]').val(icon)
                     $('#icon').addClass(icon)
                 })

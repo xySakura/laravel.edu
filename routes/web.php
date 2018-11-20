@@ -10,7 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//前台路由组
+Route::group(['prefix'=>'home','namespace'=>'Home','as'=>'home.'],function(){
+    Route::get('/','HomeController@index')->name('index');
+    //文章管理
+    Route::resource('article','ArticleController');
 
+});
 
 //首页
 Route ::get('/', 'HomeController@index') -> name('home');
