@@ -15,7 +15,12 @@ Route::group(['prefix'=>'home','namespace'=>'Home','as'=>'home.'],function(){
     Route::get('/','HomeController@index')->name('index');
     //文章管理
     Route::resource('article','ArticleController');
+});
 
+//用户中心
+Route::group(['prefix'=>'member','namespace'=>'Member','as'=>'member.'],function(){
+    //用户管理
+    Route::resource('user','UserController');
 });
 
 //首页
@@ -35,7 +40,15 @@ Route ::post('/passwordReset', 'UserController@passwordResetForm') -> name(
 );
 
 //工具类
-Route ::any('/code/send', 'Util\CodeController@send') -> name('code.send');
+Route::group(['prefix'=>'util','namespace'=>'Util','as'=>'util.'],function(){
+    //发送验证码
+    Route::any('/code/send','CodeController@send')->name('code.send');
+    //上传
+    Route::any('/upload','UploadController@uploader')->name('upload');
+    Route::any('/filesLists','UploadController@filesLists')->name('filesLists');
+
+
+});
 
 //后台管理
 Route ::group(

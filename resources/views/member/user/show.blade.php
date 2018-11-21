@@ -1,48 +1,9 @@
 @extends('home.layouts.master')
 @section('content')
-    <div class="main-content mt-7">
+    <div class="main-content">
 
         <!-- HEADER -->
-        <div class="header">
-
-            <!-- Image -->
-            <div class="container-fluid">
-
-                <!-- Body -->
-                <div class="header-body mt--5 mt-md--6">
-
-                    <div class="row align-items-center">
-                        <div class="col">
-
-                            <!-- Nav -->
-                            <ul class="nav nav-tabs nav-overflow header-tabs">
-                                <li class="nav-item">
-                                    <h2>文章列表</h2>
-                                </li>
-                            </ul>
-
-                        </div>
-                        <div class="dropdown mr-7">
-                            <!-- Toggle -->
-                            <a href="#!" class="small text-muted dropdown-toggle" data-toggle="dropdown">
-                                筛选
-                            </a>
-                            <!-- Menu -->
-                            <div class="dropdown-menu">
-                                @foreach($categories as $category)
-                                    <a class="dropdown-item sort"  href="{{route('home.article.index',['category'=>$category['id']])}}">
-                                        {{$category['title']}}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-
-                </div> <!-- / .header-body -->
-
-
-            </div>
-        </div>
+@include('member.layouts.menu')
 
         <!-- CONTENT -->
         <div data-toggle="lists" data-lists-values='["name"]'>
@@ -112,7 +73,7 @@
                                                 </div>
                                                 <div class="col-auto">
 
-                                                    @can('view',auth()->user())
+                                                @can('isMine',$user)
                                                     <!-- Dropdown -->
                                                     <div class="dropdown">
                                                         <a href="#!" class="dropdown-ellipses dropdown-toggle"
@@ -125,12 +86,13 @@
                                                                class="dropdown-item">
                                                                 查看详情
                                                             </a>
-
+                                                            @can('update',$article)
                                                                 <a href="{{route('home.article.edit',$article)}}"
                                                                    class="dropdown-item">
                                                                     编辑
                                                                 </a>
-
+                                                            @endcan
+                                                            @can('delete',$article)
                                                                 <a href="javascript:;" onclick="del(this)"
                                                                    class="dropdown-item">
                                                                     删除
@@ -139,9 +101,10 @@
                                                                       method="post">
                                                                     @csrf @method('DELETE')
                                                                 </form>
+                                                            @endcan
                                                         </div>
                                                     </div>
-                                                    @endcan
+                                                @endcan
 
                                                 </div>
                                             </div> <!-- / .row -->
@@ -211,9 +174,9 @@
 
                                                     <!-- Title -->
 
-                                                        <h4 class="card-title mb-1 name" style="width: 90%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
-                                                            <a href="{{route('home.article.show',$article)}}">{{$article->title}}</a>
-                                                        </h4>
+                                                    <h4 class="card-title mb-1 name" style="width: 90%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                        <a href="{{route('home.article.show',$article)}}">{{$article->title}}</a>
+                                                    </h4>
 
 
                                                     <!-- Text -->
@@ -256,7 +219,7 @@
                                                 <div class="col-auto">
 
                                                     <!-- Dropdown -->
-                                                @can('view',auth()->user())
+                                                @can('isMine',$user)
                                                     <!-- Dropdown -->
                                                         <div class="dropdown">
                                                             <a href="#!" class="dropdown-ellipses dropdown-toggle"
@@ -269,20 +232,22 @@
                                                                    class="dropdown-item">
                                                                     查看详情
                                                                 </a>
-
-                                                                <a href="{{route('home.article.edit',$article)}}"
-                                                                   class="dropdown-item">
-                                                                    编辑
-                                                                </a>
-
-                                                                <a href="javascript:;" onclick="del(this)"
-                                                                   class="dropdown-item">
-                                                                    删除
-                                                                </a>
-                                                                <form action="{{route('home.article.destroy',$article)}}"
-                                                                      method="post">
-                                                                    @csrf @method('DELETE')
-                                                                </form>
+                                                                @can('update',$article)
+                                                                    <a href="{{route('home.article.edit',$article)}}"
+                                                                       class="dropdown-item">
+                                                                        编辑
+                                                                    </a>
+                                                                @endcan
+                                                                @can('delete',$article)
+                                                                    <a href="javascript:;" onclick="del(this)"
+                                                                       class="dropdown-item">
+                                                                        删除
+                                                                    </a>
+                                                                    <form action="{{route('home.article.destroy',$article)}}"
+                                                                          method="post">
+                                                                        @csrf @method('DELETE')
+                                                                    </form>
+                                                                @endcan
                                                             </div>
                                                         </div>
                                                     @endcan
@@ -299,7 +264,7 @@
                         @endforeach
                     </div>
                 </div> <!-- / .tab-content -->
-                {{$articles->appends(['category' => Request::query('category')])->links()}}
+                {{$articles->links()}}
 
             </div> <!-- / .container-fluid -->
 

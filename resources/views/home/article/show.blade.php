@@ -20,7 +20,7 @@
                                 <p class="text-muted mb-1 text-muted small">
                                     <a href="" class="text-secondary">
                                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                    </a><a href="" class="text-secondary">{{$article->user->name}}</a>
+                                    </a><a href="{{route('member.user.show',$article->user)}}" class="text-secondary">{{$article->user->name}}</a>
 
                                     <i class="fa fa-clock-o ml-2" aria-hidden="true">{{$article->created_at->diffForHumans()}}</i>
 
@@ -46,14 +46,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="text-center">
-                                <a href="" class="text-secondary">
+                                <a href="{{route('member.user.show',$article->user)}}" class="text-secondary">
                                     {{$article->user->name}}
                                 </a>
                             </div>
                         </div>
                         <div class="card-block text-center p-5">
                             <div class="avatar avatar-xl">
-                                <a href="">
+                                <a href="{{route('member.user.show',$article->user)}}">
                                     <img src="{{$article->user->icon}}" alt="..." class="avatar-img rounded-circle">
                                 </a>
                             </div>

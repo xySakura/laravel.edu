@@ -17,11 +17,18 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $articles = Article::latest()->paginate(12);
+        $category = $request->query('category');
+        $articles = Article::latest();
 
-        return view('home.article.index',compact('articles'));
+        if($category){
+            $articles = $articles->where('category_id',$category);
+        }
+        $articles = $articles->paginate(9);
+        $categories = Category::all();
+
+        return view('home.article.index',compact('articles','categories'));
     }
 
 
@@ -38,7 +45,7 @@ class ArticleController extends Controller
         //dd($request->all());
         $article->title = $request->title;
         $article->category_id = $request->category_id;
-        $article->content = $request->content;
+        $article->content = $request['content'];
         $article->user_id = auth()->id();
         //dd($article);
         $article->save();
@@ -66,7 +73,7 @@ class ArticleController extends Controller
 
         $article->title = $request->title;
         $article->category_id = $request->category_id;
-        $article->content = $request->content;
+        $article->content = $request['content'];
         $article->user_id = auth()->id();
         //dd($article);
         $article->save();

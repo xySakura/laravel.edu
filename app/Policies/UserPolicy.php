@@ -74,4 +74,7 @@ class UserPolicy
     {
         //
     }
+    public function isMine(User $user, User $model){
+        return $user->id == $model->id;
+    }
 }

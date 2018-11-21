@@ -14,6 +14,7 @@
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/css/theme.min.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 
 
     <title>PikaPika</title>
@@ -273,8 +274,7 @@
 
                     <!-- Menu -->
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="" class="dropdown-item">{{auth()->user()->name}}</a>
-                        <a href="{{route('home.article.index')}}" class="dropdown-item">我的文章</a>
+                        <a href="{{route('member.user.show',auth()->user())}}" class="dropdown-item">{{auth()->user()->name}}</a>
                         @can('view',auth()->user())
                             <a href="{{route('admin.index')}}" class="dropdown-item">后台管理</a>
                         @endcan
