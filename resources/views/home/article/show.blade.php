@@ -18,14 +18,14 @@
                                     {{$article->title}}
                                 </h2>
                                 <p class="text-muted mb-1 text-muted small">
-                                    <a href="" class="text-secondary">
+                                    <a href="{{route('member.user.show',$article->user)}}" class="text-secondary">
                                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                     </a><a href="{{route('member.user.show',$article->user)}}" class="text-secondary">{{$article->user->name}}</a>
 
                                     <i class="fa fa-clock-o ml-2" aria-hidden="true">{{$article->created_at->diffForHumans()}}</i>
 
 
-                                    <a href="" class="text-secondary">
+                                    <a href="#" class="text-secondary">
                                         <i class="fa fa-folder-o ml-2" aria-hidden="true"></i>
                                         {{$article->category->title}}
                                     </a>
@@ -41,6 +41,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('home.layouts.comment')
                 </div>
                 <div class="col-12 col-xl-3">
                     <div class="card">
@@ -58,11 +59,19 @@
                                 </a>
                             </div>
                         </div>
+                        @auth()
                         <div class="card-footer text-muted">
-                            <a class="btn btn-white btn-block btn-xs" href="http://www.houdunren.com/member/follow/1">
-                                <i class="fa fa-plus" aria-hidden="true"></i> 关注 TA
+                            <a class="btn btn-white btn-block btn-xs" href="{{route('member.follow',$article->user)}}">
+                                @if($article->user->followed->contains(auth()->user()) && $article->user->following->contains(auth()->user()))
+                                    <i class="fa fa-heart" aria-hidden="true"></i> 互相关注
+                                @elseif($article->user->followed->contains(auth()->user()))
+                                    <i class="fa fa-remove" aria-hidden="true"></i> 取消关注
+                                @else
+                                    <i class="fa fa-plus" aria-hidden="true"></i> 关注 TA
+                                @endif
                             </a>
                         </div>
+                        @endauth
                     </div>
                 </div>
             </div>

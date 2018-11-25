@@ -43,9 +43,10 @@ class UserController extends Controller
     //登陆表单
     public function loginForm(Request $request)
     {
+        //dd($request->all());
+
         //$request->validate([],[])
         //dd(1);
-
         $this -> validate(
             $request,
             [
@@ -60,13 +61,17 @@ class UserController extends Controller
         );
         $credentials = $request->only('email','password');
         if(\Auth::attempt($credentials,$request->remember)){
-            return redirect()->route('home')->with('success','登陆成功');
+            if($request->from) {
+                return redirect($request -> from) -> with('success', '登陆成功');
+            }else{
+                return redirect() -> route('home') -> with('success', '登陆成功');
+            }
         }
         return redirect()->back()->with('danger','用户名或密码不正确');
     }
 
     //登陆页面
-    public function login()
+    public function login(Request $request)
     {
         return view('user.login');
     }
@@ -77,7 +82,6 @@ class UserController extends Controller
 
         return view('user.register');
     }
-
     //注册表单
     public function store(UserRequest $request)
     {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('title')->default('')->comment('文章标题');
-            $table->string('stitle')->default('')->comment('文章小标题');
-            $table->string('icon')->default('')->comment('文章图标');
+            $table->unsignedInteger('article_id')->index()->default(0)->comment('评论的文章');
+            $table->unsignedInteger('user_id')->index()->default(0)->comment('评论的用户');
+            $table->text('content')->comment('评论内容');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('comments');
     }
 }

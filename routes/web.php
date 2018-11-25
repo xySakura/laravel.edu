@@ -15,12 +15,19 @@ Route::group(['prefix'=>'home','namespace'=>'Home','as'=>'home.'],function(){
     Route::get('/','HomeController@index')->name('index');
     //文章管理
     Route::resource('article','ArticleController');
+    //文章管理
+    Route::resource('comment','CommentController');
 });
 
 //用户中心
 Route::group(['prefix'=>'member','namespace'=>'Member','as'=>'member.'],function(){
     //用户管理
     Route::resource('user','UserController');
+    //关注管理
+    Route::get('follow/{user}','UserController@follow')->name('follow');
+    //关注页面
+    Route::get('following/{user}','UserController@following')->name('following');
+    Route::get('followed/{user}','UserController@followed')->name('followed');
 });
 
 //首页

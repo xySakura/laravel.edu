@@ -12,7 +12,7 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         //调用模型工厂一次性填充10个数据
-        factory(\App\User::class,10)->create();
+        factory(\App\User::class,50)->create();
         //修改第一个数据为正式数据
         $user = \App\User::find(1);
         $user->name = 'xySakura';

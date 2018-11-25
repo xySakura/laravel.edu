@@ -46,7 +46,7 @@
             </p>
 
             <!-- Form -->
-            <form action="{{route('login')}}" method="post">
+            <form action="{{route('login',['from'=>Request::query('from')])}}" method="post">
                 @csrf
                 <!-- Email address -->
                 <div class="form-group">
@@ -101,7 +101,7 @@
                 <!-- Link -->
                 <div class="text-center">
                     <small class="text-muted text-center">
-                        Don't have an account yet? <a href="sign-up-illustration.html">Sign up</a>.
+                        Don't have an account yet? <a href="{{route('register')}}">Sign up</a>.
                     </small>
                 </div>
 

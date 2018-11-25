@@ -9,43 +9,31 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth',[
+           'only'=>['edit','update','follow']
+        ]);
+    }
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(User $user)
     {
         //获取当前用户发表的文章
@@ -53,12 +41,7 @@ class UserController extends Controller
         return view('member.user.show',compact('user','articles'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(User $user,Request $request)
     {
         //调用策略
@@ -91,7 +74,9 @@ class UserController extends Controller
         if($request->password){
             $data['password'] = bcrypt($data['password']) ;
         }
+        //dd($data);
         $user ->update($data);
+        //dd($data);
         return redirect()->route('member.user.show',$user)->with('success','操作成功');
 
     }
@@ -105,5 +90,22 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    //关注&取消关注
+    public function follow(User $user){
+        $user->followed()->toggle(auth()->user());
+        return back();
+
+    }
+
+    public function following(User $user){
+        $followers = $user->following()->paginate(12);
+        return view('member.user.following',compact('user','followers'));
+    }
+
+    public function followed(User $user){
+        $followers = $user->followed()->paginate(12);
+        return view('member.user.followed',compact('user','followers'));
     }
 }

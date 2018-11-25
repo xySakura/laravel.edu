@@ -122,7 +122,7 @@
                 <!-- Link -->
                 <div class="text-center">
                     <small class="text-muted text-center">
-                        Already have an account? <a href="sign-in-cover.html">Log in</a>.
+                        Already have an account? <a href="{{route('login')}}">Log in</a>.
                     </small>
                 </div>
 

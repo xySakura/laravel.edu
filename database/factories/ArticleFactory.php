@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\Article::class, function (Faker $faker) {
     return [
         'title'=>$faker->sentence(),
-        'user_id'=>mt_rand(1,10),
+        'user_id'=>mt_rand(1,50),
         'category_id'=>mt_rand(1,5),
         'content'=>$faker->text($maxNbChars = 800),
     ];
