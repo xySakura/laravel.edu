@@ -87,7 +87,7 @@
                         <div class="row listAlias">
                             {{--循环体--}}
                             @foreach($articles as $article)
-                                <div class="col-12 col-md-6 col-xl-4">
+                                <div class="col-12 col-md-6 col-xl-3">
 
                                     <!-- Card -->
                                     <div class="card">
@@ -97,10 +97,10 @@
                                         </a>
                                         <div class="card-body">
                                             <div class="row align-items-center">
-                                                <div class="col" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                <div class="col" style="overflow: hidden;">
 
                                                     <!-- Title -->
-                                                    <h4 class="card-title mb-2 name" >
+                                                    <h4 class="card-title mb-2 name" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
                                                         <a href="{{route('home.article.show',$article)}}">{{$article->title}}</a>
                                                     </h4>
 

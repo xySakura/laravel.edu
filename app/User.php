@@ -3,13 +3,16 @@
 namespace App;
 
 use App\Models\Attachment;
+use App\Models\Collect;
+use App\Models\Like;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -50,4 +53,13 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class,'follows','following_id','user_id');
     }
 
+    public function like(){
+        return $this->hasMany(Like::class);
+    }
+
+
+    public function collect(){
+        //第一个参数关联模型,第二个参数位数据表关联字段前缀
+        return $this->hasMany(Collect::class);
+    }
 }

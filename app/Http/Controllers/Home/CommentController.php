@@ -11,7 +11,12 @@ class CommentController extends Controller
 
     public function index(Request $request,Comment $comment)
     {
-        $comments = $comment->with('user')->where('article_id',$request->article_id)->get();
+        $comments = $comment->with(['user'])->where('article_id',$request->article_id)->get();
+
+        foreach ($comments as $comment){
+            $comment->like_num = $comment->like->count();
+        }
+
         return ['code'=>1,'message'=>'','comments'=>$comments];
     }
 
@@ -24,6 +29,7 @@ class CommentController extends Controller
         $comment->save();
 
         $comment = $comment->with('user')->find($comment->id);
+        $comment->like_num = $comment->like->count();
         //dd($comment->toArray());
 
         return ['code'=>1,'message'=>'','comment'=>$comment];

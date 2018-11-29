@@ -15,8 +15,14 @@ Route::group(['prefix'=>'home','namespace'=>'Home','as'=>'home.'],function(){
     Route::get('/','HomeController@index')->name('index');
     //文章管理
     Route::resource('article','ArticleController');
-    //文章管理
+    //评论管理
     Route::resource('comment','CommentController');
+    //点赞管理
+    Route::get('like/make','LikeController@make')->name('like.make');
+    //收藏管理
+    Route::get('collect/make','CollectController@make')->name('collect.make');
+    //搜索
+    Route::get('search','HomeController@search')->name('search');
 });
 
 //用户中心
@@ -28,10 +34,18 @@ Route::group(['prefix'=>'member','namespace'=>'Member','as'=>'member.'],function
     //关注页面
     Route::get('following/{user}','UserController@following')->name('following');
     Route::get('followed/{user}','UserController@followed')->name('followed');
+    //点赞收藏管理
+    //点赞
+    Route::get('mylike/{user}','UserController@myLike')->name('mylike');
+    Route::get('mycollect/{user}','UserController@myCollect')->name('mycollect');
+
+    //通知管理
+    Route::get('notify/{user}','NotifyController@index')->name('notify');
+    Route::get('notify/show/{notify}','NotifyController@show')->name('notify.show');
 });
 
 //首页
-Route ::get('/', 'HomeController@index') -> name('home');
+Route ::get('/', 'Home\HomeController@index') -> name('home');
 
 //用户管理
 Route ::get('/register', 'UserController@register') -> name('register');
@@ -68,6 +82,9 @@ Route ::group(
     function () {
         Route ::get('index', 'IndexController@index') -> name('index');
         Route ::resource('category', 'CategoryController');
+        //配置项
+        Route::get('config/edit/{name}','ConfigController@edit')->name('config.edit');
+        Route::post('config/update/{name}','ConfigController@update')->name('config.update');
     }
 );
 

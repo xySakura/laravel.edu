@@ -31,7 +31,7 @@
         </button>
 
         <!-- Brand -->
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="{{route('home.index')}}">
             <img src="{{asset('org/Dashkit/assets')}}/img/logo.svg" class="navbar-brand-img mx-auto" alt="...">
         </a>
 
@@ -118,13 +118,38 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#sidebarLayouts" data-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i class="fe fe-layout"></i> Layouts
+                        <i class="fe fe-layout"></i>网站配置
                     </a>
                     <div class="collapse " id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="index.html" class="nav-link">
-                                    Sidenav
+                                <a href="{{route('admin.config.edit',['name'=>'base'])}}" class="nav-link">
+                                    基本配置
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.config.edit',['name'=>'upload'])}}" class="nav-link">
+                                    上传配置
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.config.edit',['name'=>'email'])}}" class="nav-link">
+                                    邮件配置
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.config.edit',['name'=>'code'])}}" class="nav-link">
+                                    验证码配置
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.config.edit',['name'=>'search'])}}" class="nav-link">
+                                    搜索配置
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.config.edit',['name'=>'wechat'])}}" class="nav-link">
+                                    微信配置
                                 </a>
                             </li>
                         </ul>

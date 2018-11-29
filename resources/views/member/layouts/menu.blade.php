@@ -44,11 +44,12 @@
                 <div class="col">
 
                     <!-- Nav -->
+                    {{--*******************************************-关注粉丝********************************************--}}
                     @if(active_class(if_route(['member.following'])) || active_class(if_route(['member.followed'])))
                     <ul class="nav nav-tabs nav-overflow header-tabs">
                         <li class="nav-item">
                             <a href="{{route('member.user.show',$user)}}" class="nav-link {{active_class(if_route(['member.user.show']))}}">
-                                @if(auth()->id() == $user->id)我@else他@endif的文章
+                                @if(auth()->id() == $user->id)我@else他@endif的主页
                             </a>
                         </li>
                         <li class="nav-item">
@@ -62,14 +63,33 @@
                             </a>
                         </li>
                     </ul>
-                    @else
-                    <ul class="nav nav-tabs nav-overflow header-tabs">
+                        {{--*******************************************点赞********************************************--}}
+                    @elseif(active_class(if_route(['member.mylike'])) )
+                        <ul class="nav nav-tabs nav-overflow header-tabs">
+                            <li class="nav-item">
+                                <a href="{{route('member.user.show',$user)}}" class="nav-link {{active_class(if_route(['member.user.show']))}}">
+                                    @if(auth()->id() == $user->id)我@else他@endif的主页
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('member.mylike',[$user,'type'=>'article'])}}" class="nav-link {{active_class(if_route(['member.mylike']) && if_query('type', 'article'), 'active', '')}}">
+                                    点赞文章
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('member.mylike',[$user,'type'=>'comment'])}}" class="nav-link {{active_class(if_route(['member.mylike']) && if_query('type', 'comment'), 'active', '')}}">
+                                    点赞评论
+                                </a>
+                            </li>
+                        </ul>
+                        {{--*******************************************设置*******************************************--}}
+                    @elseif(active_class(if_route(['member.user.edit'])))
+                        <ul class="nav nav-tabs nav-overflow header-tabs">
                         <li class="nav-item">
                             <a href="{{route('member.user.show',$user)}}" class="nav-link {{active_class(if_route(['member.user.show']))}}">
-                                @if(auth()->id() == $user->id)我@else他@endif的文章
+                                @if(auth()->id() == $user->id)我@else他@endif的主页
                             </a>
                         </li>
-                        @can('isMine',$user)
                         <li class="nav-item">
                             <a href="{{route('member.user.edit',[$user,'type'=>'name'])}}" class="nav-link {{active_class(if_route(['member.user.edit']) && if_query('type', 'name'), 'active', '')}}">
                                 修改资料
@@ -85,6 +105,36 @@
                                 重置密码
                             </a>
                         </li>
+                        </ul>
+                        {{--*******************************************主页********************************************--}}
+                    @else
+                    <ul class="nav nav-tabs nav-overflow header-tabs">
+                        <li class="nav-item">
+                            <a href="{{route('member.user.show',$user)}}" class="nav-link {{active_class(if_route(['member.user.show']))}}">
+                                @if(auth()->id() == $user->id)我@else他@endif的主页
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('member.mylike',[$user,'type'=>'article'])}}" class="nav-link">
+                                @if(auth()->id() == $user->id)我@else他@endif的点赞
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('member.mycollect',$user)}}" class="nav-link">
+                                @if(auth()->id() == $user->id)我@else他@endif的收藏
+                            </a>
+                        </li>
+                        @can('isMine',$user)
+                            <li class="nav-item">
+                                <a href="{{route('member.notify',$user)}}" class="nav-link {{active_class(if_route(['member.notify']))}}">
+                                    我的通知
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('member.user.edit',[$user,'type'=>'name'])}}" class="nav-link {{active_class(if_route(['member.user.edit']) && if_query('type', 'name'), 'active', '')}}">
+                                    我的设置
+                                </a>
+                            </li>
                         @endcan
                     </ul>
                     @endif

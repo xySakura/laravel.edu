@@ -25,7 +25,7 @@ class ArticleController extends Controller
         if($category){
             $articles = $articles->where('category_id',$category);
         }
-        $articles = $articles->paginate(9);
+        $articles = $articles->paginate(12);
         $categories = Category::all();
 
         return view('home.article.index',compact('articles','categories'));

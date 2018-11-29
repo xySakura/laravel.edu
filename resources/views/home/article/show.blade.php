@@ -8,8 +8,21 @@
                     <div class="card card-body p-5">
                         <div class="row">
                             <div class="col text-right">
-                                <a href="" class="btn btn-xs">
-                                    <i class="fa fa-heart-o" aria-hidden="true"></i> 收藏</a>
+                                @auth()
+                                @if(!$article->collect->where('user_id',auth()->id())->first())
+                                <a href="{{route('home.collect.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-xs">
+                                    <i class="fa fa-heart-o" aria-hidden="true"></i> 收藏
+                                </a>
+                                @else
+                                    <a href="{{route('home.collect.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-xs">
+                                        <i class="fa fa-heart" aria-hidden="true"></i> 已收藏
+                                    </a>
+                                @endif
+                                @else
+                                    <a href="{{route('login',['from'=>url()->full()])}}" class="btn btn-xs">
+                                        <i class="fa fa-heart-o" aria-hidden="true"></i> 收藏
+                                    </a>
+                                @endauth
                             </div>
                         </div>
                         <div class="row">
@@ -20,9 +33,11 @@
                                 <p class="text-muted mb-1 text-muted small">
                                     <a href="{{route('member.user.show',$article->user)}}" class="text-secondary">
                                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                    </a><a href="{{route('member.user.show',$article->user)}}" class="text-secondary">{{$article->user->name}}</a>
+                                    </a><a href="{{route('member.user.show',$article->user)}}"
+                                           class="text-secondary">{{$article->user->name}}</a>
 
-                                    <i class="fa fa-clock-o ml-2" aria-hidden="true">{{$article->created_at->diffForHumans()}}</i>
+                                    <i class="fa fa-clock-o ml-2"
+                                       aria-hidden="true">{{$article->created_at->diffForHumans()}}</i>
 
 
                                     <a href="#" class="text-secondary">
@@ -36,9 +51,22 @@
                         <div class="row">
                             <div class="col-12 mt-5">
                                 <div class="markdown editormd-html" id="content">
-                                    <textarea name="content" id="" hidden cols="30" rows="10"> {{$article->content}}</textarea>
+                                    <textarea name="content" id="" hidden cols="30"
+                                              rows="10"> {{$article->content}}</textarea>
                                 </div>
                             </div>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            @auth()
+                                @if(!$article->like->where('user_id',auth()->id())->first())
+                                    <a href="{{route('home.like.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-outline-warning"><i class="fa fa-thumbs-o-up">点赞</i></a>
+                                @else
+                                    <a href="{{route('home.like.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-warning"><i class="fa fa-thumbs-up">点赞</i></a>
+                                @endif
+                            @else
+                                <a href="{{route('login',['from'=>url()->full()])}}" class="btn btn-outline-warning"><i class="fa fa-thumbs-o-up">点赞</i></a>
+                            @endauth
                         </div>
                     </div>
                     @include('home.layouts.comment')
@@ -60,17 +88,18 @@
                             </div>
                         </div>
                         @auth()
-                        <div class="card-footer text-muted">
-                            <a class="btn btn-white btn-block btn-xs" href="{{route('member.follow',$article->user)}}">
-                                @if($article->user->followed->contains(auth()->user()) && $article->user->following->contains(auth()->user()))
-                                    <i class="fa fa-heart" aria-hidden="true"></i> 互相关注
-                                @elseif($article->user->followed->contains(auth()->user()))
-                                    <i class="fa fa-remove" aria-hidden="true"></i> 取消关注
-                                @else
-                                    <i class="fa fa-plus" aria-hidden="true"></i> 关注 TA
-                                @endif
-                            </a>
-                        </div>
+                            <div class="card-footer text-muted">
+                                <a class="btn btn-white btn-block btn-xs"
+                                   href="{{route('member.follow',$article->user)}}">
+                                    @if($article->user->followed->contains(auth()->user()) && $article->user->following->contains(auth()->user()))
+                                        <i class="fa fa-heart" aria-hidden="true"></i> 互相关注
+                                    @elseif($article->user->followed->contains(auth()->user()))
+                                        <i class="fa fa-remove" aria-hidden="true"></i> 取消关注
+                                    @else
+                                        <i class="fa fa-plus" aria-hidden="true"></i> 关注 TA
+                                    @endif
+                                </a>
+                            </div>
                         @endauth
                     </div>
                 </div>
@@ -78,20 +107,20 @@
         </div>
 
     </div> <!-- / .main-content -->
-    @endsection
+@endsection
 @push('js')
     <script>
-        require(['hdjs','MarkdownIt','marked', 'highlight'], function (hdjs,MarkdownIt,marked) {
+        require(['hdjs', 'MarkdownIt', 'marked', 'highlight'], function (hdjs, MarkdownIt, marked) {
 
             let md = new MarkdownIt();
             let content = md.render($('textarea[name=content]').val());
             $('#content').html(content);
 
-            $(document).ready(function() {
-                $('pre code').each(function(i, block) {
+            $(document).ready(function () {
+                $('pre code').each(function (i, block) {
                     hljs.highlightBlock(block);
                 });
             });
         })
     </script>
-    @endpush
+@endpush
