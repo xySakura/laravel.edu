@@ -15,10 +15,12 @@
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/css/theme.min.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
     <meta name="csrf-token" content="{{csrf_token()}}">
 
 
     <title>{{xy_config('base.title')}}</title>
+    @stack('css')
 </head>
 <body>
 
@@ -163,7 +165,7 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="{{route('member.user.show',auth()->user())}}"
                            class="dropdown-item">{{auth()->user()->name}}</a>
-                        @can('view',auth()->user())
+                        @can('Admin-admin-index')
                             <a href="{{route('admin.index')}}" class="dropdown-item">后台管理</a>
                         @endcan
                         <hr class="dropdown-divider">
@@ -307,13 +309,12 @@
 <script src="{{asset('org/Dashkit/assets')}}/libs/highlight/highlight.pack.min.js"></script>
 <script src="{{asset('org/Dashkit/assets')}}/libs/flatpickr/dist/flatpickr.min.js"></script>
 <script src="{{asset('org/Dashkit/assets')}}/libs/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
-<script src="{{asset('org/Dashkit/assets')}}/libs/list.js/dist/list.min.js"></script>
 <script src="{{asset('org/Dashkit/assets')}}/libs/quill/dist/quill.min.js"></script>
 <script src="{{asset('org/Dashkit/assets')}}/libs/dropzone/dist/min/dropzone.min.js"></script>
 <script src="{{asset('org/Dashkit/assets')}}/libs/select2/dist/js/select2.min.js"></script>
 
 <!-- Theme JS -->
-<script src="{{asset('org/Dashkit/assets')}}/js/theme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
 @include('layouts.hdjs')
 @include('layouts.message')
 @stack('js')

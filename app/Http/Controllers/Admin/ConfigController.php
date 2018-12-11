@@ -8,8 +8,16 @@ use App\Http\Controllers\Controller;
 
 class ConfigController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth.admin',[
+            'except'=>[],
+        ]);
+    }
+
     public function edit($name){
 
+        xyHasRole('headmaster');
         //dd($name);
         $config = Config::firstOrNew(
             ['name'=>$name]
@@ -21,6 +29,7 @@ class ConfigController extends Controller
     }
 
     public function update(Request $request,$name){
+        xyHasRole('headmaster');
 
         $res = Config::updateOrCreate(
             ['name'=>$name],

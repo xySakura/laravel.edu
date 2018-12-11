@@ -12,11 +12,14 @@
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/libs/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/libs/flatpickr/dist/flatpickr.min.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+    <meta name="csrf-token" content="{{csrf_token()}}">
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{asset('org/Dashkit/assets')}}/css/theme.min.css">
 
     <title>后台管理</title>
+    @stack('css')
 </head>
 <body>
 <!-- SIDEBAR
@@ -85,6 +88,7 @@
                         <i class="fe fe-home"></i> 首页
                     </a>
                 </li>
+                @role('article')
                 <li class="nav-item">
                     <a class="nav-link" href="#sidebarPages" data-toggle="collapse" role="button" aria-expanded="false"
                        aria-controls="sidebarPages">
@@ -100,21 +104,31 @@
                         </ul>
                     </div>
                 </li>
+                @endrole
+                @role('permission')
                 <li class="nav-item">
                     <a class="nav-link" href="#sidebarAuth" data-toggle="collapse" role="button" aria-expanded="false"
                        aria-controls="sidebarAuth">
-                        <i class="fe fe-user"></i> Authentication
+                        <i class="fe fe-user"></i> 权限管理
                     </a>
                     <div class="collapse" id="sidebarAuth">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="#sidebarSignIn" class="nav-link" >
-                                    Sign in
+                                <a href="{{route('role.user.index')}}" class="nav-link" >
+                                   用户管理
+                                </a>
+                                <a href="{{route('role.role.index')}}" class="nav-link" >
+                                    角色管理
+                                </a>
+                                <a href="{{route('role.permission.index')}}" class="nav-link" >
+                                    权限列表
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+                @endrole
+                @role('headmaster')
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#sidebarLayouts" data-toggle="collapse" role="button"
                        aria-expanded="false" aria-controls="sidebarLayouts">
@@ -155,11 +169,70 @@
                         </ul>
                     </div>
                 </li>
+                @endrole
+                @role('wechat')
                 <li class="nav-item d-md-none">
                     <a class="nav-link" href="#sidebarModalActivity" data-toggle="modal">
                         <span class="fe fe-bell"></span> Notifications
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#wechat" data-toggle="collapse" role="button" aria-expanded="false"
+                       aria-controls="wechat">
+                        <i class="fa fa-wechat">&nbsp;&nbsp;&nbsp;</i> 微信管理
+                    </a>
+                    <div class="collapse " id="wechat">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{route('wechat.menu.index')}}" class="nav-link" >
+                                    微信菜单
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#wechatresponse" class="nav-link collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="wechatresponse">
+                                   自动回复
+                                </a>
+                                <div class="collapse" id="wechatresponse" style="">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{route('wechat.response_default.create')}}" class="nav-link ">
+                                                默认回复
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{route('wechat.response_text.index')}}" class="nav-link ">
+                                                文字回复
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{route('wechat.response_news.index')}}" class="nav-link ">
+                                                图文回复
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endrole
+                @role('swiper')
+                <li class="nav-item">
+                    <a class="nav-link" href="#swiper" data-toggle="collapse" role="button" aria-expanded="false"
+                       aria-controls="swiper">
+                        <i class="fa fa-picture-o">&nbsp;&nbsp;&nbsp;</i> 轮播管理
+                    </a>
+                    <div class="collapse " id="swiper">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{route('swiper.swiper.index')}}" class="nav-link" >
+                                    轮播设置
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endrole
             </ul>
 
             <!-- Divider -->
@@ -335,8 +408,10 @@
                     </a>
                     <!-- Menu -->
                     <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
+                        <a href="{{route('member.user.show',['user_id'=>1])}}" class="dropdown-item">个人中心</a>
                         <a href="{{route('logout')}}" class="dropdown-item">注销登录</a>
                     </div>
+
                 </div>
 
 
@@ -364,7 +439,7 @@
 
 
 <!-- Theme JS -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
 
 {{--stack在手册Blade模板--}}
 

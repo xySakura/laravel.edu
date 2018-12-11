@@ -80,6 +80,7 @@ class UserController extends Controller
         );
 
         $data = $request -> all();
+        //dd($data);
 
         //密码加密
         if ($request -> password) {

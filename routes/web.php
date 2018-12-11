@@ -88,5 +88,38 @@ Route ::group(
     }
 );
 
+//微信管理
+Route::group(['prefix'=>'wechat','namespace'=>'Wechat','as'=>'wechat.'],function (){
+    Route::resource('menu','WechatMenuController');
+    Route::any('api/handler','ApiController@handler')->name('api.handler');
+    Route::get('menu/push/{menu}','WechatMenuController@push')->name('menu.push');
+    //自动回复文本
+    Route::resource('response_text','ResponseTextController');
+    //自动回复图文
+    Route::resource('response_news','ResponseNewsController');
+    //微信默认回复
+    Route::resource('response_default','ResponseDefaultController');
+});
+
+//轮播图管理
+Route::group(['prefix'=>'swiper','namespace'=>'Swiper','as'=>'swiper.'],function (){
+    Route::resource('swiper','SwiperController');
+});
+
+//权限管理
+Route::group(['prefix'=>'role','namespace'=>'Role','as'=>'role.'],function() {
+    //权限列表
+    Route::get('permission/index','PermissionController@index')->name('permission.index');
+    //清除权限缓存
+    Route::get('permission/forget_permission_cache','PermissionController@forgetPermissionCache')->name('permission.forget_permission_cache');
+    //角色管理的资源路由
+    Route::resource('role','RoleController');
+    //设置角色权限
+    Route::post('role/set_role_permission/{role}','RoleController@setRolePermission')->name('role.set_role_permission');
+    //用户设置角色
+    Route::get('user/index','UserController@index')->name('user.index');
+    Route::get('user/user_set_role_create/{user}','UserController@userSetRoleCreate')->name('user.user_set_role_create');
+    Route::post('user/user_set_role_store/{user}','UserController@userSetRoleStore')->name('user.user_set_role_store');
+});
 
 

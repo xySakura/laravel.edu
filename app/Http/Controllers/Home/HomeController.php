@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Swiper;
 use App\User;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
@@ -14,10 +15,11 @@ class HomeController extends Controller
     public function index(){
 
         $actives = Activity::latest()->limit(4)->get();
+        $swipers = Swiper::all();
 
         //dd($actives->count());
         //dd(session()->get('success'));
-        return view('home.index',compact('actives'));
+        return view('home.index',compact('actives','swipers'));
     }
 
     public function search(Request $request){

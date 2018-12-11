@@ -10,80 +10,56 @@ use App\Http\Controllers\Controller;
 class CategoryController extends Controller
 {
 
+    public function __construct()
+    {
+        $this -> middleware(
+            'auth.admin',
+            [
+                'except' => [],
+            ]
+        );
+    }
+
     public function index()
     {
+        xyHasRole('article');
         $categories = Category::paginate(10);
         return view('admin.category.index',compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
 
 
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function store(CategoryRequest $request)
     {
+        xyHasRole('article');
         Category::create($request->all());
         return redirect()->route('admin.category.index')->with('success','操作成功');
 
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function edit(Category $category)
     {
+        xyHasRole('article');
         return view('admin.category.edit',compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(CategoryRequest $request, Category $category)
     {
+        xyHasRole('article');
         $category->update($request->all());
         return redirect()->route('admin.category.index')->with('success','操作成功');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Category $category)
     {
+        xyHasRole('article');
         $category->delete();
         return redirect()->route('admin.category.index')->with('success','操作成功');
     }

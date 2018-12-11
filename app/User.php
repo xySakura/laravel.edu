@@ -9,10 +9,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Scout\Searchable;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable,Searchable;
+    use Notifiable,Searchable,HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -62,4 +65,29 @@ class User extends Authenticatable
         //第一个参数关联模型,第二个参数位数据表关联字段前缀
         return $this->hasMany(Collect::class);
     }
+
+    public function role(){
+
+       return $this->belongsToMany(Role::class,'model_has_roles','model_id','role_id');
+    }
+
+    /**
+     * 获取将存储在JWT主题声明中的标识符.
+     * 就是⽤用户表主键 id *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * 返回⼀一个键值数组，其中包含要添加到JWT的任何⾃自定义声明. *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
 }

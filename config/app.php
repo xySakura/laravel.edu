@@ -133,6 +133,7 @@ return [
     */
 
     'providers' => [
+        Spatie\Permission\PermissionServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
